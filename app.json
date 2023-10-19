@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "desafio5-reactNative-coder",
+    "slug": "desafio5-reactNative-coder",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splashBeta.jpeg",
+      "resizeMode": "contain",
+      "backgroundColor": "#00BF63"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
