@@ -1,38 +1,26 @@
-import { FlatList, Pressable, View, Text } from "react-native";
-import React from "react";
+import { FlatList, Pressable, View, Text, Modal } from "react-native";
+import React, { useState } from "react";
 import styles from "./ListGifs.style";
 import Gif from "../Gif/Gif";
 import { useShareGif } from "../../hooks/useShareGif/useShareGif";
 
 const ListGifs = ({ data }) => {
-  const { isSharing, shareGif } = useShareGif();
-
   const renderGif = ({ item, index }) => {
     return (
       <>
-        <Pressable
-          style={styles.gifTrending}
-          onPress={() => handleShareGif(item.url)}
-        >
-          <Gif id={item.id} url={item.url} title={item.title} index={index} />
-        </Pressable>
+        <Gif
+          id={item.id}
+          url={item.url}
+          title={item.title}
+          index={index}
+          isSaved={item.isSaved}
+        />
       </>
     );
   };
 
-  const handleShareGif = (url) => {
-    shareGif(url);
-  };
-
-  //const handleScroll = onScroll ? (event) => onScroll(event) : null;
-
   return (
     <>
-      {isSharing && (
-        <View style={styles.loaderContainer}>
-          <Text style={styles.loaderText}>Compartiendo...</Text>
-        </View>
-      )}
       <FlatList
         style={styles.container}
         data={data}

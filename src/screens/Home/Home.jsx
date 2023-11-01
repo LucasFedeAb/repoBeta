@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, ActivityIndicator, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import styles from "./Home.style";
 import Header from "@components/Header/Header";
@@ -35,7 +35,15 @@ const Home = () => {
         ]}
       >
         <Header title={"Home"} />
-        {isLoading ? <Text>Loading...</Text> : <HomeTopTabNavigator />}
+        {isLoading ? (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size={80} color="#ccc" />
+          </View>
+        ) : (
+          <HomeTopTabNavigator />
+        )}
       </View>
     </>
   );

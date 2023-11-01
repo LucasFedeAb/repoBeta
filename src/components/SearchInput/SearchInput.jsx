@@ -8,12 +8,13 @@ const SearchInput = ({ onSearch }) => {
   const [value, setValue] = useState("");
   const currentTheme = useSelector((state) => state.theme.currentTheme);
 
-  useEffect(() => {
+  /* useEffect(() => {
     onSearch(value);
-  }, [value]);
+  }, [value]); */
 
   const search = () => {
     onSearch(value);
+    clearInput();
   };
 
   const clearInput = () => {
@@ -44,8 +45,9 @@ const SearchInput = ({ onSearch }) => {
           value={value}
           onChangeText={setValue}
           style={styles.searchField}
-          placeholder="Buscar.en Giphy.."
+          placeholder="Buscar en Giphy..."
           placeholderTextColor="#010718"
+          onSubmitEditing={search}
         />
 
         <TouchableOpacity style={styles.closeIcon} onPress={clearInput}>

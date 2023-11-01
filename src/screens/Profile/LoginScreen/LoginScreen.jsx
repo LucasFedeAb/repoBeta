@@ -3,19 +3,20 @@ import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import styles from "./LoginScreen.style";
 import ButtonGradient from "../../../components/ButtonGradient/ButtonGradient";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoginMutation } from "../../../services/authApi";
 import { setUser } from "../../../features/authSlice/authSlice";
 import { insertSession } from "../../../db";
 import { Ionicons } from "@expo/vector-icons";
 
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const username = useSelector((state) => state.auth.name);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
   const [confirmTerms, setconfirmTerms] = useState(false);
   const [triggerLogin] = useLoginMutation();
-  const dispatch = useDispatch();
 
   const onSubmit = () => {
     triggerLogin({
@@ -29,8 +30,9 @@ const LoginScreen = ({ navigation }) => {
           localId: result.localId,
           email: result.email,
           token: result.idToken,
+          username: username,
         })
-          //.then((result) => console.log(result))
+          .then((result) => console.log(result))
           .catch((error) => console.log(error.message));
       });
   };
@@ -91,7 +93,7 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.forgotPassword}>Forgot your password?</Text>
         </TouchableOpacity>
 
-        <ButtonGradient label={"SIG IN"} onPress={onSubmit} />
+        <ButtonGradient label={"LOGIN"} onPress={onSubmit} />
         <Text style={styles.noAccount}>Don't have an account?</Text>
         <ButtonGradient
           label={"CREATE ACCOUNT"}

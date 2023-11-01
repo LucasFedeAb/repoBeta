@@ -5,10 +5,12 @@ import styles from "./SignUpScreen.style";
 import { Ionicons } from "@expo/vector-icons";
 import { useSignUpMutation } from "../../../services/authApi";
 import { useDispatch } from "react-redux";
-import { setUser } from "../../../features/authSlice/authSlice";
+import { setUser, setName } from "../../../features/authSlice/authSlice";
+import { insertSession } from "../../../db";
 import ButtonGradient from "../../../components/ButtonGradient/ButtonGradient";
 
 const SignUpScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,6 @@ const SignUpScreen = ({ navigation }) => {
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
   const [confirmTerms, setconfirmTerms] = useState(false);
   const [triggerSignup] = useSignUpMutation();
-  const dispatch = useDispatch();
 
   const onSubmit = () => {
     //console.log("Login button");
@@ -29,6 +30,14 @@ const SignUpScreen = ({ navigation }) => {
       .then((result) => {
         //console.log(result);
         dispatch(setUser(result));
+        dispatch(setName(username));
+        console.log("usernameeee:", username);
+        insertSession({
+          localId: result.localId,
+          email: result.email,
+          token: result.idToken,
+          username: username,
+        });
       })
       .catch((err) => console.log(err));
   };
@@ -145,7 +154,7 @@ const SignUpScreen = ({ navigation }) => {
         <ButtonGradient label={"CREATE ACCOUNT"} onPress={onSubmit} />
         <Text style={styles.noAccount}>Don't have an account?</Text>
         <ButtonGradient
-          label={"SIG IN"}
+          label={"LOGIN"}
           onPress={() => navigation.navigate("LoginScreen")}
         />
 

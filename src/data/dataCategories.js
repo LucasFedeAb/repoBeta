@@ -65,4 +65,49 @@
     image:
       "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
   },
+  {
+    title: "Enojado",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
+  {
+    title: "Sorprendido",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
+  {
+    title: "Triste",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
+  {
+    title: "Feliz",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
+  {
+    title: "Aplausos",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
+  {
+    title: "Millonario",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
+  {
+    title: "Tacaño",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
+  {
+    title: "Boca",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
+  {
+    title: "River",
+    image:
+      "https://media2.giphy.com/media/3LJe0XrNolBkTE1ohu/200w.webp?cid=ecf05e47oqymapsb4vd0vvqoaiw4617pb27zgebg2qws6gh8&ep=v1_gifs_search&rid=200w.webp&ct=g",
+  },
 ]; */

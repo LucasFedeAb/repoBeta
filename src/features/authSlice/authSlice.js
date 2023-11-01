@@ -4,6 +4,7 @@ const initialState = {
   user: null,
   token: null,
   localId: null,
+  name: null,
   imageCamera: null,
 };
 
@@ -17,6 +18,9 @@ export const authSlice = createSlice({
         token: action.payload.idToken,
         localId: action.payload.localId,
       };
+    },
+    setName: (state, action) => {
+      state.name = action.payload;
     },
     clearUser: () => {
       return {
@@ -34,6 +38,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setUser, clearUser, setCameraImage } = authSlice.actions;
+export const { setUser, setName, clearUser, setCameraImage } =
+  authSlice.actions;
 
 export default authSlice.reducer;

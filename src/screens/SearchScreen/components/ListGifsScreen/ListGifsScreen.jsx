@@ -1,57 +1,88 @@
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ListGifsScreen.style";
-import { useGetGiphyByCategoryQuery } from "../../../../services/giphyApi";
+import { useGetGiphyBySearchQuery } from "../../../../services/giphyApi";
 import { useSelector, useDispatch } from "react-redux";
 import { setDataGiphy } from "../../../../features/gifsSlice/gifsSlice";
 import Header from "@components/Header/Header";
 import ListGifs from "../../../../components/ListGifs/ListGifs";
 
 const ListGifsScreen = ({ route }) => {
-  const currentTheme = useSelector((state) => state.theme.currentTheme);
-  const category = useSelector((state) => state.gifs.categorySelected);
-  const giphyGifsData = useSelector((state) => state.gifs.dataGiphy);
-
-  //console.log(category);
   const dispatch = useDispatch();
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
+  const searchTerm = useSelector((state) => state.gifs.categorySelected);
+  const giphyGifsData = useSelector((state) => state.gifs.dataGiphy);
+  const favorites = useSelector((state) => state.favorites.favoritesGifs);
+  const [isInitialSearch, setIsInitialSearch] = useState(true);
+  const [giphyData, setGiphyData] = useState([]);
+  const { data, isLoading } = useGetGiphyBySearchQuery(searchTerm);
 
-  //console.log("giphyGifsData", giphyGifsData);
-  const { data: dataGiphyByCategory, isLoading: loadingGiphyByCategory } =
-    useGetGiphyByCategoryQuery(category);
+  useEffect(() => {
+    if (data) {
+      dispatch(setDataGiphy(data));
+    }
+  }, [data]);
 
-  if (category && !loadingGiphyByCategory) {
-    dispatch(setDataGiphy(dataGiphyByCategory));
-  }
-
-  let giphyData;
-  if (!loadingGiphyByCategory) {
-    //console.log("data ListScreen: ", dataGiphyByCategory);
-    giphyData = giphyGifsData?.map((gif, index) => ({
-      id: gif.id,
-      title: gif.title,
-      url: gif.images.fixed_height.url,
-      index: index,
-    }));
-  }
-  console.log("categoriaaa: ", category);
+  useEffect(() => {
+    if (data) {
+      const updateGiphyData = giphyGifsData?.map((gif, index) => ({
+        id: gif.id,
+        title: gif.title,
+        url: gif.images.fixed_height.url,
+        index: index,
+      }));
+      setGiphyData(updateGiphyData);
+      setIsInitialSearch(false);
+    }
+  }, [giphyGifsData, favorites]);
 
   return (
     <>
-      <StatusBar
-        animated={true}
-        style="light"
-        backgroundColor="transparent"
-      />
-      <Header title={category} />
+      <StatusBar animated={true} style="light" backgroundColor="transparent" />
+      <Header title={searchTerm} />
       <SafeAreaView
         style={[
           styles.container,
           { backgroundColor: currentTheme.backgroundColor },
         ]}
       >
-        {giphyData && <ListGifs data={giphyData} />}
+        {isInitialSearch && isLoading && (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size={80} color="#ccc" />
+          </View>
+        )}
+        {isInitialSearch && !isLoading && (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size={80} color="#ccc" />
+          </View>
+        )}
+
+        {!isInitialSearch && giphyData.length === 0 && (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <View>
+              <Text
+                style={{
+                  color: currentTheme.color,
+                  fontSize: 16,
+                  textAlign: "center",
+                  padding: 8,
+                }}
+              >
+                Lo sentimos, no se encontraron resultados para tu búsqueda 😕🧐
+              </Text>
+            </View>
+          </View>
+        )}
+
+        {!isLoading && giphyData.length > 0 && <ListGifs data={giphyData} />}
       </SafeAreaView>
     </>
   );

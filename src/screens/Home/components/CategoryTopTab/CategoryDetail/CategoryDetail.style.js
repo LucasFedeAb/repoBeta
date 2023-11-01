@@ -30,10 +30,10 @@ export default styles = StyleSheet.create({
   imageCategory: {
     width: "100%",
     height: 220,
-    borderRadius: 10,
+    /* borderRadius: 10, */
     opacity: 0.9,
-    /* borderBottomRightRadius: 150,
-    borderBottomLeftRadius: 150, */
+    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: 4,
     resizeMode: "contain",
   },
   scrollContainer: {

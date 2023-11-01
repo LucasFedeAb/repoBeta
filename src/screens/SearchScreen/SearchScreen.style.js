@@ -5,10 +5,9 @@ export default styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    marginBottom: -80,
   },
-  containerSearch: {
-    
-  },
+  containerSearch: {},
   boxTitle: {
     widht: "100%",
     flexDirection: "row",
@@ -20,7 +19,7 @@ export default styles = StyleSheet.create({
     fontWeight: "500",
   },
   subTitle: {
-    marginTop: 50,
+    marginTop: 40,
     marginBottom: 8,
     color: "#fff",
     fontSize: 16,
@@ -39,7 +38,7 @@ export default styles = StyleSheet.create({
   },
   categoryItem: {
     width: "45%",
-    height: 100,
+    height: 95,
     backgroundColor: colorGreen.primary,
     justifyContent: "center",
     alignItems: "center",

@@ -4,6 +4,7 @@ export const lightMode = {
   backgroundColor: "#fff",
   textColor: "#000",
   color: "#000",
+  statusBarColor: "dark",
   /* tabBarBackgroundColor: "#396156",
   tabBarBackgroundColor: "#3c675a",
   tabIconFocus: "#fff",
@@ -27,6 +28,7 @@ export const darkMode = {
   textColor: "#fff",
   color: "#fff",
   tabBarBackgroundColor: "#000",
+  statusBarColor: "light",
   /* tabBarBackgroundColor: "#1a1c29", */
   tabLabelFocus: "#fff",
   tabIconColor: "#ccc",

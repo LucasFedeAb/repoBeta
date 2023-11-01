@@ -2,6 +2,7 @@ import React from "react";
 import { View, Image, FlatList } from "react-native";
 import styles from "./AllGifsTitle.style";
 import Header from "@components/Header/Header";
+import Gif from "../../../../components/Gif/Gif";
 import { useSelector } from "react-redux";
 
 const AllGifsTitle = ({ route }) => {
@@ -23,11 +24,14 @@ const AllGifsTitle = ({ route }) => {
     }
   }
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item, index }) => (
+    <Gif url={item} id={item} index={index} width={120} heigth={180} />
+  );
+  /* const renderItem = ({ item }) => (
     <View style={styles.gif}>
       <Image source={{ uri: item }} style={styles.imageGif} />
     </View>
-  );
+  ); */
 
   return (
     <View
@@ -42,7 +46,7 @@ const AllGifsTitle = ({ route }) => {
         numColumns={3}
         columnWrapperStyle={styles.wrapperStyle}
         renderItem={renderItem}
-        keyExtractor={(gif) => gif}
+        keyExtractor={(gif, index) => gif}
       />
     </View>
   );

@@ -47,6 +47,9 @@ const CategoryDetail = ({ category }) => {
   };
 
   const renderItem = ({ item, index }) => {
+    return <Gif url={item} index={index} />;
+  };
+  /* const renderItem = ({ item, index }) => {
     return (
       <Pressable
         style={styles.gifTrending}
@@ -57,7 +60,7 @@ const CategoryDetail = ({ category }) => {
         <Gif url={item} index={index} />
       </Pressable>
     );
-  };
+  }; */
 
   const scrollY = useRef(new Animated.Value(0)).current;
   const handleScroll = Animated.event(

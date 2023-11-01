@@ -1,7 +1,7 @@
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ListGifsScreen, SearchScreen } from "../../screens";
+import { ListGifsScreen, SearchFocus, SearchScreen } from "../../screens";
 import styles from "./SearchStackNavigator.style";
 import { useSelector } from "react-redux";
 
@@ -33,6 +33,7 @@ function SearchStackNavigator() {
     >
       <Stack.Screen name="SearchNav" component={SearchScreen} />
       <Stack.Screen name="ListGifsNav" component={ListGifsScreen} />
+      {/* <Stack.Screen name="SearchFocusNav" component={SearchFocus} /> */}
     </Stack.Navigator>
   );
 }

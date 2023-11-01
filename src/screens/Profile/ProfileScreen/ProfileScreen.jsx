@@ -1,16 +1,25 @@
 import * as ImagePicker from "expo-image-picker";
 import { Image, Pressable, Text, View, TouchableOpacity } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { setCameraImage } from "../../../features/authSlice/authSlice";
+import {
+  setCameraImage,
+  clearUser,
+} from "../../../features/authSlice/authSlice";
 import { usePostProfileImageMutation } from "../../../services/permissionsApi";
+import { deleteSession } from "../../../db";
+
 import styles from "./ProfileScreen.style";
 
 const ProfileScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
   const image = useSelector((state) => state.auth.imageCamera);
+  const email = useSelector((state) => state.auth.user);
+  const username = useSelector((state) => state.auth.name);
   const { localId } = useSelector((state) => state.auth);
   const [triggerSaveProfileImage, result] = usePostProfileImageMutation();
-  const dispatch = useDispatch();
 
   const verifyCameraPermissions = async () => {
     const { granted } = await ImagePicker.requestCameraPermissionsAsync();
@@ -65,36 +74,79 @@ const ProfileScreen = ({ navigation }) => {
     setSelectedImage({ localUri: pickerResult.uri });
   };
 
+  const handleLogout = () => {
+    dispatch(clearUser());
+    deleteSession();
+  };
+
   return (
-    <View style={styles.container}>
-      {image ? (
-        <Image
-          source={{
-            uri: image,
-          }}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      ) : (
-        <View style={styles.containerImage}>
+    <>
+      <StatusBar animated={true} style="light" backgroundColor="transparent" />
+      <View style={styles.container}>
+        {image ? (
           <Image
             source={{
-              uri: "https://media3.giphy.com/media/PKl9JTqnoiKtO/200w.webp?cid=ecf05e473z86u1axndx6drlkql0y2palpvh3qw9qcq6wod1m&ep=v1_gifs_search&rid=200w.webp&ct=g",
+              uri: image,
             }}
             style={styles.image}
             resizeMode="contain"
           />
+        ) : (
+          <View style={styles.containerImage}>
+            <Image
+              source={{
+                uri: "https://media3.giphy.com/media/PKl9JTqnoiKtO/200w.webp?cid=ecf05e473z86u1axndx6drlkql0y2palpvh3qw9qcq6wod1m&ep=v1_gifs_search&rid=200w.webp&ct=g",
+              }}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          </View>
+        )}
+        <View style={{ width: "100%" }}>
+          <TouchableOpacity style={styles.cameraButton} onPress={pickImage}>
+            <Text style={styles.labelButton}>Tomar Foto de perfil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.cameraButton} onPress={confirmImage}>
+            <Text style={styles.labelButton}>Confirmar</Text>
+          </TouchableOpacity>
         </View>
-      )}
-      <View style={{ width: "100%" }}>
-        <TouchableOpacity style={styles.cameraButton} onPress={pickImage}>
-          <Text style={styles.labelButton}>Tomar Foto de perfil</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.cameraButton} onPress={confirmImage}>
-          <Text style={styles.labelButton}>Confirmar</Text>
-        </TouchableOpacity>
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.labelButton}>E-mail: {email}</Text>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text style={styles.labelButton}>Nombre: {username}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity
+            style={[
+              styles.sidebarNavLink,
+              {
+                marginTop: 180,
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 8,
+              },
+            ]}
+            onPress={handleLogout}
+          >
+            <Ionicons name="exit-outline" size={28} color="#fff" />
+            <Text style={{ color: "#fff" }}>Cerrar sesión</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 

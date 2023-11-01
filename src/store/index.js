@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import gifsSlice from "../features/gifsSlice/gifsSlice";
 import themeSlice from "../features/themeSlice/themeSlice";
 import authSlice from "../features/authSlice/authSlice";
+import favoritesSlice from "../features/favoritesSlice/favoritesSlice";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { gifsApi } from "../services/gifsApi";
 import { authApi } from "../services/authApi";
@@ -13,6 +14,7 @@ const store = configureStore({
     gifs: gifsSlice,
     theme: themeSlice,
     auth: authSlice,
+    favorites: favoritesSlice,
     [gifsApi.reducerPath]: gifsApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [permissionsApi.reducerPath]: permissionsApi.reducer,

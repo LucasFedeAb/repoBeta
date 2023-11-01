@@ -9,7 +9,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const TopTab = createMaterialTopTabNavigator();
 
-const HomeTopTabNavigator = ({ uniqueCategories }) => {
+const HomeTopTabNavigator = () => {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
   const categories = useSelector((state) => state.gifs.uniqueCategories);
 

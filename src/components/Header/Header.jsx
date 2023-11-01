@@ -11,17 +11,14 @@ import styles from "./Header.style";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "../../features/themeSlice/themeSlice";
-import { clearUser } from "../../features/authSlice/authSlice";
 import { LinearGradient } from "expo-linear-gradient";
-import { colorGreen } from "../../constants/colors";
 import { StatusBar } from "expo-status-bar";
-import { deleteSession } from "../../db";
 
 const Header = ({ title }) => {
   const [sidebarActive, setSidebarActive] = useState(false);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-  const dispatch = useDispatch();
   const sidebarAnimation = useRef(new Animated.Value(0)).current;
 
   const toggleSidebar = () => {
@@ -37,7 +34,7 @@ const Header = ({ title }) => {
   const closeSidebar = () => {
     Animated.timing(sidebarAnimation, {
       toValue: 0,
-      duration: 400,
+      duration: 700,
       useNativeDriver: false,
     }).start(() => {
       setSidebarActive(false);
@@ -46,11 +43,6 @@ const Header = ({ title }) => {
 
   const toggleTheme = () => {
     dispatch(setTheme());
-  };
-
-  const handleLogout = () => {
-    dispatch(clearUser());
-    deleteSession();
   };
 
   return (
@@ -188,13 +180,6 @@ const Header = ({ title }) => {
                         </Text>
                       </>
                     )}
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.sidebarNavLink, { marginTop: 180 }]}
-                    onPress={handleLogout}
-                  >
-                    <Ionicons name="exit-outline" size={28} color="#fff" />
-                    <Text style={styles.sidebarNavLinkText}>Cerrar sesión</Text>
                   </TouchableOpacity>
                 </View>
               </LinearGradient>
