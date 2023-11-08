@@ -6,7 +6,7 @@ export const initDb = () => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS sessions (localId TEXT PRIMARY KEY NOT NULL , email TEXT NOT NULL, token TEXT NOT NULL, username TEXT)",
+        "CREATE TABLE IF NOT EXISTS sessions (localId TEXT PRIMARY KEY NOT NULL , email TEXT NOT NULL, token TEXT NOT NULL)",
         [],
         () => {
           tx.executeSql(
@@ -23,13 +23,12 @@ export const initDb = () => {
   return promise;
 };
 
-export const insertSession = ({ localId, email, token, username }) => {
-  console.log("username:", username);
+export const insertSession = ({ localId, email, token }) => {
   const promise = new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO sessions (localId, email, token, username) VALUES (?, ?, ?, ?);",
-        [localId, email, token, username],
+        "INSERT INTO sessions (localId, email, token) VALUES (?, ?, ?);",
+        [localId, email, token],
         (_, result) => resolve(result),
         (_, error) => reject(error)
       );

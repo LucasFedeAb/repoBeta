@@ -5,14 +5,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "./SearchScreen.style";
 import SearchInput from "@components/SearchInput/SearchInput";
 import { useSelector, useDispatch } from "react-redux";
-import { useGetCategoriesQuery } from "../../services/gifsApi";
-import { setCategorySelected } from "../../features/gifsSlice/gifsSlice";
+import {
+  setCategorySelected,
+  setTrendingSearchTerms,
+} from "../../features/gifsSlice/gifsSlice";
 import { useNavigation } from "@react-navigation/native";
+import { useGetTrendingTermsQuery } from "../../services/giphyApi";
 
 const SearchScreen = () => {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
+  const trendingSearchTerms = useSelector(
+    (state) => state.gifs.trendingSearchTerms
+  );
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-  const { data: dataCategories, isLoading } = useGetCategoriesQuery();
+  const { data: dataTrendingTerms, isLoading } = useGetTrendingTermsQuery();
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -37,6 +43,12 @@ const SearchScreen = () => {
     [{ nativeEvent: { contentOffset: { y: searchInputTranslateY } } }],
     { useNativeDriver: false }
   );
+
+  useEffect(() => {
+    if (dataTrendingTerms) {
+      dispatch(setTrendingSearchTerms(dataTrendingTerms.data));
+    }
+  }, [dataTrendingTerms]);
 
   const backgroundColors = [
     "#016450",
@@ -112,7 +124,7 @@ const SearchScreen = () => {
             ]}
           >
             <Text style={[styles.subTitle, { color: currentTheme.color }]}>
-              Explorar
+              Tendencias:
             </Text>
           </Animated.View>
         </View>
@@ -147,10 +159,10 @@ const SearchScreen = () => {
                   </Animated.View>
                 </ScrollView> */}
                 <FlatList
-                  data={dataCategories}
+                  data={trendingSearchTerms}
                   numColumns={2}
                   columnWrapperStyle={styles.columnWrapperStyle}
-                  keyExtractor={(item) => item.title}
+                  keyExtractor={(item) => item}
                   renderItem={({ item, index }) => (
                     <TouchableOpacity
                       style={[
@@ -160,10 +172,12 @@ const SearchScreen = () => {
                             backgroundColors[index % backgroundColors.length],
                         },
                       ]}
-                      key={item.title}
-                      onPress={() => handleClickCategory(item.title)}
+                      key={item}
+                      onPress={() => handleClickCategory(item)}
                     >
-                      <Text style={styles.titleCategory}>{item.title}</Text>
+                      <Text style={styles.titleCategory}>
+                        {item.toUpperCase()}
+                      </Text>
                     </TouchableOpacity>
                   )}
                   onScroll={(event) => {

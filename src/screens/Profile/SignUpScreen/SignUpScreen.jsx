@@ -5,7 +5,7 @@ import styles from "./SignUpScreen.style";
 import { Ionicons } from "@expo/vector-icons";
 import { useSignUpMutation } from "../../../services/authApi";
 import { useDispatch } from "react-redux";
-import { setUser, setName } from "../../../features/authSlice/authSlice";
+import { setUser } from "../../../features/authSlice/authSlice";
 import { insertSession } from "../../../db";
 import ButtonGradient from "../../../components/ButtonGradient/ButtonGradient";
 
@@ -18,9 +18,11 @@ const SignUpScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
   const [confirmTerms, setconfirmTerms] = useState(false);
+  const [passwordError, setPasswordError] = useState(null);
+  const [error, setError] = useState(null);
   const [triggerSignup] = useSignUpMutation();
 
-  const onSubmit = () => {
+  /* const onSubmit = () => {
     //console.log("Login button");
     triggerSignup({
       email,
@@ -30,19 +32,76 @@ const SignUpScreen = ({ navigation }) => {
       .then((result) => {
         //console.log(result);
         dispatch(setUser(result));
-        dispatch(setName(username));
-        console.log("usernameeee:", username);
         insertSession({
           localId: result.localId,
           email: result.email,
           token: result.idToken,
-          username: username,
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("Errr", err));
+  }; */
+
+  const onSubmit = async () => {
+    // Validación de la contraseña
+    const isValidPassword = validatePassword(password);
+    if (!isValidPassword) {
+      setPasswordError(
+        "La contraseña debe contener al menos 8 caracteres, una letra mayúscula y un número."
+      );
+      return;
+    } else {
+      setPasswordError(null);
+    }
+
+    if (password !== confirmPass) {
+      setPasswordError("Las contraseñas no coinciden. Por favor, verifica.");
+      return;
+    } else {
+      setPasswordError("");
+    }
+
+    try {
+      const result = await triggerSignup({ email, password }).unwrap();
+      dispatch(setUser(result));
+      insertSession({
+        localId: result.localId,
+        email: result.email,
+        token: result.idToken,
+      })
+        .then((result) => {
+          console.log("insertSession", result);
+        })
+        .catch((error) => {
+          setError(error.message);
+          console.log("Error messgge", error.message);
+        });
+    } catch (error) {
+      let errorMessage = error.data.error.message;
+      let errorShow;
+      if (errorMessage === "INVALID_EMAIL") {
+        errorShow =
+          "Correo electrónico inválido. Por favor, introduce una dirección de correo válida.";
+      } else if (errorMessage === "INVALID_LOGIN_CREDENTIALS") {
+        errorShow =
+          "Contraseña incorrecta. Verifica tu contraseña e intenta de nuevo.";
+      } else if (errorMessage === "MISSING_PASSWORD") {
+        errorShow = "Falta introducir la contraseña.";
+      }
+
+      setError(errorShow);
+      console.error(error);
+      console.log("Error messgge 2", error);
+    }
   };
+
   const seePassword = () => {
     setHidePassword(!hidePassword);
+  };
+
+  // Función para validar la contraseña
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return passwordRegex.test(password);
   };
 
   return (
@@ -67,7 +126,7 @@ const SignUpScreen = ({ navigation }) => {
               style={styles.inputEmail}
               placeholder="Username"
               placeholderTextColor={"gray"}
-              value={username}
+              value={username.trim()}
               onChangeText={setUsername}
             />
           </View>
@@ -85,7 +144,7 @@ const SignUpScreen = ({ navigation }) => {
               style={styles.inputEmail}
               placeholder="E-mail"
               placeholderTextColor={"gray"}
-              value={email}
+              value={email.trim()}
               onChangeText={setEmail}
             />
           </View>
@@ -103,7 +162,7 @@ const SignUpScreen = ({ navigation }) => {
               style={styles.inputEmail}
               placeholder="Password"
               placeholderTextColor={"gray"}
-              value={password}
+              value={password.trim()}
               onChangeText={setPassword}
               secureTextEntry={hidePassword}
             />
@@ -129,7 +188,7 @@ const SignUpScreen = ({ navigation }) => {
               style={styles.inputEmail}
               placeholder="Confirm Password"
               placeholderTextColor={"gray"}
-              value={confirmPass}
+              value={confirmPass.trim()}
               onChangeText={setConfirmPass}
               secureTextEntry={hideConfirmPassword}
             />
@@ -147,6 +206,34 @@ const SignUpScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+        {passwordError && (
+          <View
+            style={{
+              width: "100%",
+              padding: 8,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "red", fontSize: 12, textAlign: "center" }}>
+              {passwordError}
+            </Text>
+          </View>
+        )}
+        {error && (
+          <View
+            style={{
+              width: "100%",
+              padding: 8,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "red", fontSize: 12, textAlign: "center" }}>
+              {error}
+            </Text>
+          </View>
+        )}
         <TouchableOpacity>
           <Text style={styles.forgotPassword}>Forgot your password?</Text>
         </TouchableOpacity>
@@ -155,7 +242,12 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.noAccount}>Don't have an account?</Text>
         <ButtonGradient
           label={"LOGIN"}
-          onPress={() => navigation.navigate("LoginScreen")}
+          onPress={() => {
+            navigation.navigate("LoginScreen");
+            setEmail("");
+            setPassword("");
+            setError(null);
+          }}
         />
 
         <View style={styles.termsContainer}>

@@ -5,6 +5,8 @@ const initialState = {
   categorySelected: null,
   gifIdSelected: null,
   dataGiphy: [],
+  dataDb: [],
+  trendingSearchTerms: [],
 };
 
 export const gifsSlice = createSlice({
@@ -17,11 +19,18 @@ export const gifsSlice = createSlice({
     setGifIdSelected: (state, action) => {
       state.gifIdSelected = action.payload;
     },
+
     setUniqueCategories: (state, action) => {
       state.uniqueCategories = action.payload;
     },
     setDataGiphy: (state, action) => {
       state.dataGiphy = action.payload.data;
+    },
+    setDataDb: (state, action) => {
+      state.dataDb = action.payload.data;
+    },
+    setTrendingSearchTerms: (state, action) => {
+      state.trendingSearchTerms = action.payload;
     },
   },
 });
@@ -31,6 +40,8 @@ export const {
   setGifIdSelected,
   setUniqueCategories,
   setDataGiphy,
+  setDataDb,
+  setTrendingSearchTerms,
 } = gifsSlice.actions;
 
 export default gifsSlice.reducer;

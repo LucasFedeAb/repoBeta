@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: "userLogged",
   favoritesGifs: [],
+  resetFavorites: false,
 };
 
 export const favoritesSlice = createSlice({
@@ -22,10 +23,18 @@ export const favoritesSlice = createSlice({
     setFavoritesGifs: (state, action) => {
       state.favoritesGifs = action.payload;
     },
+    setResetFavorites: (state, action) => {
+      state.resetFavorites = action.payload;
+      state.isSaved = false;
+    },
   },
 });
 
-export const { addFavorite, removeFavorite, setFavoritesGifs } =
-  favoritesSlice.actions;
+export const {
+  addFavorite,
+  removeFavorite,
+  setFavoritesGifs,
+  setResetFavorites,
+} = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;

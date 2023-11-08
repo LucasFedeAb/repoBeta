@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   View,
   Image,
@@ -6,7 +6,6 @@ import {
   Text,
   Pressable,
   Modal,
-  Alert,
 } from "react-native";
 import styles from "./Gif.style";
 import { Ionicons } from "@expo/vector-icons";
@@ -18,7 +17,6 @@ import {
 import {
   addFavoriteGifFromDb,
   removeFavoriteGifFromDb,
-  resetAllFavorites,
   getFavoriteGifsFromDb,
 } from "../../db";
 import { useShareGif } from "../../hooks/useShareGif/useShareGif";
@@ -35,71 +33,30 @@ const Gif = ({
   const dispatch = useDispatch();
   const localId = useSelector((state) => state.auth.localId);
   const favorites = useSelector((state) => state.favorites.favoritesGifs);
-  const { isSharing, shareGif } = useShareGif();
+  const { shareGif } = useShareGif();
+
   const [modalVisible, setModalVisible] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const handleModal = (url) => {
+  const handleModal = () => {
     setModalVisible(true);
   };
 
-  const handleShareGif = (url) => {
+  const handleShareGif = () => {
     shareGif(url);
   };
 
-  const toggleFav = () => {
-    const gifId = id;
-    if (isFavorite) {
-      console.log("Removing from favorites:", gifId);
-      dispatch(removeFavorite(url, localId, gifId, title));
-      removeFavoriteGifFromDb(url, localId, gifId, title);
-      setIsFavorite(false);
-    } else {
-      console.log("Adding to favorites:", gifId);
-      dispatch(addFavorite(url, localId, gifId, title));
-      addFavoriteGifFromDb(url, localId, gifId, title);
-      setIsFavorite(true);
-    }
-  };
-
   const handleAddGif = () => {
-    const gifId = id;
-    console.log("Adding to favorites:", gifId);
-    dispatch(addFavorite(url, localId, gifId, title));
-    addFavoriteGifFromDb(url, localId, gifId, title);
+    dispatch(addFavorite(url, localId, id, title));
+    addFavoriteGifFromDb(url, localId, id, title);
     setIsFavorite(true);
   };
 
   const handleRemoveGif = () => {
-    const gifId = id;
-    dispatch(removeFavorite(url, localId, gifId, title));
-    removeFavoriteGifFromDb(url, localId, gifId, title);
+    dispatch(removeFavorite(url, localId, id, title));
+    removeFavoriteGifFromDb(url, localId, id, title);
     setIsFavorite(false);
   };
-
-  useEffect(() => {
-    if (localId) {
-      getFavoriteGifsFromDb(localId)
-        .then((favorites) => {
-          const updatedFavoritesList = favorites.map((favorite, index) => ({
-            id: favorite.gifId,
-            title: favorite.title,
-            url: url,
-            index: index,
-            isSaved: true,
-          }));
-
-          setIsFavorite(
-            updatedFavoritesList.some(
-              (favorite) => favorite.id === id && favorite.url === url
-            )
-          );
-        })
-        .catch((error) => {
-          console.log("Error al obtener los GIFs favoritos:", error);
-        });
-    }
-  }, [localId, favorites]);
 
   const masonryEffectHeight = [
     180, 140, 150, 220, 180, 140, 110, 150, 180, 165, 200,
@@ -123,16 +80,44 @@ const Gif = ({
     "#e9142a",
     "#3c1860",
   ];
-
   const backgroundColor = backgroundColors[index % backgroundColors.length];
+
+  useEffect(() => {
+    if (localId) {
+      getFavoriteGifsFromDb(localId)
+        .then((favorites) => {
+          const updatedFavoritesList = favorites.map((favorite) => ({
+            id: favorite.gifId,
+            title: favorite.title,
+            url: url,
+          }));
+
+          setIsFavorite(
+            updatedFavoritesList.some(
+              (favorite) => favorite.id === id && favorite.url === url
+            )
+          );
+          /* setIsFavorite(
+            updatedFavoritesList.includes(favorite.url && favorite.id)
+          ); */
+        })
+        .catch((error) => {
+          console.log("Error al obtener los GIFs favoritos:", error);
+        });
+    }
+  }, [localId, favorites]);
+
+  const memoizedGifImage = useMemo(() => {
+    return (
+      <Image
+        source={{ uri: url }}
+        style={[styles.imageGif, { height, backgroundColor, width }]}
+      />
+    );
+  }, [url, height, backgroundColor, width]);
 
   return (
     <>
-      {isSharing && (
-        <View style={styles.loaderContainer}>
-          <Text style={styles.loaderText}>Compartiendo...</Text>
-        </View>
-      )}
       {modalVisible && (
         <Modal
           animationType="fade"
@@ -202,17 +187,10 @@ const Gif = ({
                     <Ionicons
                       name="heart"
                       size={30}
-                      color={isFavorite ? "orange" : "#fff"}
+                      color={isFavorite ? "darkorange" : "#fff"}
                     />
                   </TouchableOpacity>
                 </View>
-
-                {/* <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </Pressable> */}
               </View>
               <TouchableOpacity
                 style={styles.favIcon}
@@ -226,19 +204,15 @@ const Gif = ({
       )}
 
       <View style={[styles.gif]}>
-        <Pressable style={styles.gifTrending} onPress={() => handleModal(url)}>
-          <Image
-            source={{ uri: url }}
-            style={[styles.imageGif, { height, backgroundColor, width }]}
-          />
+        <Pressable style={styles.gifTrending} onPress={handleModal}>
+          {memoizedGifImage}
         </Pressable>
 
-        {isSaved && (
+        {isSaved ? (
           <TouchableOpacity style={styles.favIcon} onPress={handleRemoveGif}>
             <Ionicons name="trash" size={25} color="red" />
           </TouchableOpacity>
-        )}
-        {!isSaved && (
+        ) : (
           <TouchableOpacity
             style={styles.favIcon}
             onPress={isFavorite ? handleRemoveGif : handleAddGif}
@@ -246,7 +220,7 @@ const Gif = ({
             <Ionicons
               name="heart"
               size={25}
-              color={isFavorite ? "orange" : "#f9f9f9"}
+              color={isFavorite ? "darkorange" : "lightgray"}
             />
           </TouchableOpacity>
         )}

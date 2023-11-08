@@ -12,12 +12,13 @@ import { usePostProfileImageMutation } from "../../../services/permissionsApi";
 import { deleteSession } from "../../../db";
 
 import styles from "./ProfileScreen.style";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const image = useSelector((state) => state.auth.imageCamera);
   const email = useSelector((state) => state.auth.user);
-  const username = useSelector((state) => state.auth.name);
+  const currentTheme = useSelector((state) => state.theme.currentTheme);
   const { localId } = useSelector((state) => state.auth);
   const [triggerSaveProfileImage, result] = usePostProfileImageMutation();
 
@@ -48,6 +49,10 @@ const ProfileScreen = ({ navigation }) => {
       }
     }
   };
+
+  useEffect(() => {
+    confirmImage();
+  }, [image]);
 
   const confirmImage = () => {
     triggerSaveProfileImage({ image, localId });
@@ -82,67 +87,77 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <>
       <StatusBar animated={true} style="light" backgroundColor="transparent" />
-      <View style={styles.container}>
-        {image ? (
-          <Image
-            source={{
-              uri: image,
-            }}
-            style={styles.image}
-            resizeMode="contain"
-          />
-        ) : (
-          <View style={styles.containerImage}>
-            <Image
-              source={{
-                uri: "https://media3.giphy.com/media/PKl9JTqnoiKtO/200w.webp?cid=ecf05e473z86u1axndx6drlkql0y2palpvh3qw9qcq6wod1m&ep=v1_gifs_search&rid=200w.webp&ct=g",
-              }}
-              style={styles.image}
-              resizeMode="contain"
-            />
-          </View>
-        )}
-        <View style={{ width: "100%" }}>
-          <TouchableOpacity style={styles.cameraButton} onPress={pickImage}>
-            <Text style={styles.labelButton}>Tomar Foto de perfil</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.cameraButton} onPress={confirmImage}>
-            <Text style={styles.labelButton}>Confirmar</Text>
-          </TouchableOpacity>
+      <SafeAreaView style={styles.containerHeader}>
+        <View>
+          <Text style={[styles.textHeader]}>Perfil</Text>
         </View>
-        <View
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.labelButton}>E-mail: {email}</Text>
+        <View>
+          <Ionicons name="person-circle-outline" size={30} color="#fff" />
         </View>
-        <View
-          style={{
-            width: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={styles.labelButton}>Nombre: {username}</Text>
+      </SafeAreaView>
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: currentTheme.backgroundColor,
+          },
+        ]}
+      >
+        <View style={styles.containerContentImage}>
+          {image ? (
+            <>
+              <View
+                style={[
+                  styles.containerImage,
+                  { borderColor: currentTheme.backgroundColor },
+                ]}
+              >
+                <Image
+                  source={{
+                    uri: image,
+                  }}
+                  style={styles.image}
+                  resizeMode="contain"
+                />
+              </View>
+              <View style={styles.containerButton}>
+                <Pressable style={styles.cameraImage} onPress={pickImage}>
+                  <Ionicons name="camera-reverse" size={25} color="white" />
+                </Pressable>
+              </View>
+            </>
+          ) : (
+            <>
+              <View
+                style={[
+                  styles.containerImage,
+                  { borderColor: currentTheme.backgroundColor },
+                ]}
+              >
+                <Image
+                  source={{
+                    uri: "https://media3.giphy.com/media/3vqiIuTqcYWy6AdsXr/200w.webp?cid=ecf05e4769843129fa962e64663f0bc9042e41c028f40024&ep=v1_user_favorites&rid=200w.webp&ct=g",
+                  }}
+                  style={styles.image}
+                  resizeMode="contain"
+                />
+              </View>
+              <View style={styles.containerButton}>
+                <Pressable style={styles.cameraImage} onPress={pickImage}>
+                  <Ionicons name="camera-reverse" size={25} color="white" />
+                </Pressable>
+              </View>
+            </>
+          )}
         </View>
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity
-            style={[
-              styles.sidebarNavLink,
-              {
-                marginTop: 180,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 8,
-              },
-            ]}
-            onPress={handleLogout}
-          >
-            <Ionicons name="exit-outline" size={28} color="#fff" />
-            <Text style={{ color: "#fff" }}>Cerrar sesión</Text>
+
+        <View style={styles.userEmail}>
+          <Text style={[styles.emailText]}>Usuario: {email}</Text>
+        </View>
+        <View style={styles.logoutContainer}>
+          <TouchableOpacity style={styles.buttonLogout} onPress={handleLogout}>
+            <Ionicons name="exit-outline" size={20} color="#fff" />
+            <Text style={styles.labelButtonLogout}>Cerrar sesión</Text>
           </TouchableOpacity>
         </View>
       </View>

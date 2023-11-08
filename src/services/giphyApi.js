@@ -6,10 +6,16 @@ export const giphyApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: baseUrlGiphy }),
   endpoints: (builder) => ({
     getGiphyBySearch: builder.query({
-      query: (category) =>
-        `gifs/search?q=${category}&api_key=${apiKeyGiphy}&limit=30`,
+      query: ({ category, limit = 50, page = 0, lang = "en" }) =>
+        `gifs/search?q=${category}&api_key=${apiKeyGiphy}&limit=${limit}&offset=${
+          page * limit
+        }&lang=${lang}`,
+    }),
+    getTrendingTerms: builder.query({
+      query: () =>
+        `trending/searches?api_key=${apiKeyGiphy}&country=Argentina&lang=es`,
     }),
   }),
 });
 
-export const { useGetGiphyBySearchQuery } = giphyApi;
+export const { useGetGiphyBySearchQuery, useGetTrendingTermsQuery } = giphyApi;

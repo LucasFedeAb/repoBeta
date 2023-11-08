@@ -14,7 +14,7 @@ import { setTheme } from "../../features/themeSlice/themeSlice";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 
-const Header = ({ title }) => {
+const Header = ({ title, onPress }) => {
   const [sidebarActive, setSidebarActive] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -82,6 +82,31 @@ const Header = ({ title }) => {
                   <Ionicons name="notifications" size={25} color="#FFF" />
                 </TouchableOpacity>
               </>
+            ) : title === "Mis Favoritos" ? (
+              <>
+                <View
+                  style={{
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <TouchableOpacity
+                    style={styles.endIcon}
+                    onPress={() => navigation.goBack()}
+                  >
+                    <Ionicons name="chevron-back" size={35} color="#FFF" />
+                  </TouchableOpacity>
+                  <Text style={styles.titleDetail}>{title}</Text>
+                  <TouchableOpacity
+                    style={[styles.endIcon, { marginLeft: 8 }]}
+                    onPress={onPress}
+                  >
+                    <Ionicons name="ellipsis-vertical" size={25} color="#FFF" />
+                  </TouchableOpacity>
+                </View>
+              </>
             ) : (
               <>
                 <TouchableOpacity
@@ -91,8 +116,7 @@ const Header = ({ title }) => {
                   <Ionicons name="chevron-back" size={35} color="#FFF" />
                 </TouchableOpacity>
                 <Text style={styles.titleDetail}>{title}</Text>
-
-                <View />
+                <View></View>
               </>
             )}
           </View>

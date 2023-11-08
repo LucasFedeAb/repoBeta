@@ -1,28 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
 import AuthStackNavigator from "../AuthStackNavigator/AuthStackNavigator";
 import BottomTabNavigator from "../BottomTabNavigator/BottomTabNavigator";
 import { useSelector, useDispatch } from "react-redux";
+import { useGetCategoriesQuery } from "../../services/gifsApi";
+import { setUniqueCategories } from "../../features/gifsSlice/gifsSlice";
 import { useGetProfileImageQuery } from "../../services/permissionsApi";
 import { setCameraImage, setUser } from "../../features/authSlice/authSlice";
 import { fetchSession } from "../../db";
+import { Splash } from "../../components";
 
 const MainNavigator = () => {
-  const [loadingSession, setLoadingSession] = useState(false);
-  const { user, localId } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const { data, error, isLoading } = useGetProfileImageQuery(localId);
+  const [loadingSession, setLoadingSession] = useState(true);
+  const categories = useSelector((state) => state.gifs.uniqueCategories);
+  const { user, localId } = useSelector((state) => state.auth);
+  const { data: dataProfile } = useGetProfileImageQuery(localId);
+  const { data, isLoading } = useGetCategoriesQuery();
 
   useEffect(() => {
     if (data) {
-      dispatch(setCameraImage(data.image));
+      let uniqueCategories = [];
+      data.map((item) => {
+        uniqueCategories.push(item.title);
+      });
+      dispatch(setUniqueCategories(uniqueCategories));
     }
   }, [data]);
 
   useEffect(() => {
+    if (dataProfile) {
+      dispatch(setCameraImage(dataProfile.image));
+    }
+  }, [dataProfile]);
+
+  useEffect(() => {
     (async () => {
       try {
-        setLoadingSession(true);
         const session = await fetchSession();
         //console.log("Esta es la sesion", session);
         if (session.rows.length) {
@@ -37,26 +50,15 @@ const MainNavigator = () => {
       }
     })();
   }, []);
-  return loadingSession ? (
-    <>
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "#121212",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ color: "#fff", fontSize: 18 }}>Loading Session...</Text>
-      </View>
-    </>
-  ) : !loadingSession && user ? (
-    <BottomTabNavigator />
-  ) : (
-    <AuthStackNavigator />
-  );
 
-  //return user ? <BottomTabNavigator /> : <AuthStackNavigator />;
+  if (loadingSession) {
+    return <Splash />;
+  }
+  if (categories.length < 1) {
+    return <Splash />;
+  }
+
+  return user && categories ? <BottomTabNavigator /> : <AuthStackNavigator />;
 };
 
 export default MainNavigator;

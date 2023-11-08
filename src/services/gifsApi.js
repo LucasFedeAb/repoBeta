@@ -11,6 +11,9 @@ export const gifsApi = createApi({
     getGifs: builder.query({
       query: () => "gifs.json",
     }),
+    getGifsDb: builder.query({
+      query: () => "gifsDb.json",
+    }),
     getGifsByCategory: builder.query({
       query: (category) => `gifs.json?orderBy="category"&equalTo="${category}"`,
     }),
@@ -30,6 +33,7 @@ export const gifsApi = createApi({
 export const {
   useGetCategoriesQuery,
   useGetGifsQuery,
+  useGetGifsDbQuery,
   useGetGifsByCategoryQuery,
   useGetGifsByTitleQuery,
   /* usePostOrderMutation, */

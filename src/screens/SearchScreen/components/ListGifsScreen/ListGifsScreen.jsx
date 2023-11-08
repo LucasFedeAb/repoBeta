@@ -1,13 +1,12 @@
 import { Text, View, ActivityIndicator } from "react-native";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
-import React, { useState, useEffect } from "react";
 import styles from "./ListGifsScreen.style";
 import { useGetGiphyBySearchQuery } from "../../../../services/giphyApi";
 import { useSelector, useDispatch } from "react-redux";
 import { setDataGiphy } from "../../../../features/gifsSlice/gifsSlice";
-import Header from "@components/Header/Header";
-import ListGifs from "../../../../components/ListGifs/ListGifs";
+import { Header, ListGifs } from "@components";
 
 const ListGifsScreen = ({ route }) => {
   const dispatch = useDispatch();
@@ -17,7 +16,9 @@ const ListGifsScreen = ({ route }) => {
   const favorites = useSelector((state) => state.favorites.favoritesGifs);
   const [isInitialSearch, setIsInitialSearch] = useState(true);
   const [giphyData, setGiphyData] = useState([]);
-  const { data, isLoading } = useGetGiphyBySearchQuery(searchTerm);
+  const { data, isLoading } = useGetGiphyBySearchQuery({
+    category: searchTerm,
+  });
 
   useEffect(() => {
     if (data) {
@@ -33,6 +34,7 @@ const ListGifsScreen = ({ route }) => {
         url: gif.images.fixed_height.url,
         index: index,
       }));
+
       setGiphyData(updateGiphyData);
       setIsInitialSearch(false);
     }

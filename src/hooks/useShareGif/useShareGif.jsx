@@ -13,18 +13,13 @@ export const useShareGif = () => {
       const response = await FileSystem.downloadAsync(gif, fileUri);
 
       if (response.status === 200) {
-        const shared = await Sharing.shareAsync(response.uri, {
+        await Sharing.shareAsync(response.uri, {
           mimeType: "image/gif",
           dialogTitle: message,
         });
 
-        if (shared) {
-          console.log("GIF compartido con éxito");
-          await FileSystem.deleteAsync(response.uri, { idempotent: true });
-        } else {
-          console.log("Compartir GIF cancelado");
-          await FileSystem.deleteAsync(response.uri, { idempotent: true });
-        }
+        console.log("GIF compartido con éxito");
+        await FileSystem.deleteAsync(response.uri, { idempotent: true });
       } else {
         console.error("Error al descargar la imagen GIF");
       }
