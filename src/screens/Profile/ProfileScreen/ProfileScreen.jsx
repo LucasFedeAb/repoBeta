@@ -134,7 +134,7 @@ const ProfileScreen = ({ navigation }) => {
               >
                 <Image
                   source={{
-                    uri: "https://media3.giphy.com/media/3vqiIuTqcYWy6AdsXr/200w.webp?cid=ecf05e4769843129fa962e64663f0bc9042e41c028f40024&ep=v1_user_favorites&rid=200w.webp&ct=g",
+                    uri: "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdm44bmx5NDU1bm5ybWNjazIyaDNzbm5yc2o4MWN3eWFveXdqdHZwciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3vqiIuTqcYWy6AdsXr/giphy.gif",
                   }}
                   style={styles.image}
                   resizeMode="contain"

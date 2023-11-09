@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "desafio5-reactNative-coder",
-    "slug": "desafio5-reactNative-coder",
+    "name": "GifStickers",
+    "slug": "GifStickers",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "https://i.ibb.co/JqRmHhg/splash-Beta.jpg",
+    "icon": "./assets/splashBeta.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splashBeta.jpeg",
+      "image": "./assets/splashBeta.png",
       "resizeMode": "contain",
       "backgroundColor": "#00BF63"
     },
@@ -17,12 +17,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/splashBeta.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "gifapp.coder"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/splashBeta.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "25fe6ad8-93ad-41bc-b4d3-b85e5c30bbd4"
+      }
     }
   }
 }
