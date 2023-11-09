@@ -11,9 +11,27 @@ function AuthStackNavigator() {
         headerShown: false,
       })}
     >
-      <AuthStack.Screen name="ProfileScreen" component={ProfileScreen} />
-      <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
-      <AuthStack.Screen name="SignUpScreen" component={SignUpScreen} />
+      <AuthStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{
+          animation: "slide_from_left",
+        }}
+      />
+      <AuthStack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{
+          animation: "slide_from_left",
+        }}
+      />
+      <AuthStack.Screen
+        name="SignUpScreen"
+        component={SignUpScreen}
+        options={{
+          animation: "slide_from_left",
+        }}
+      />
     </AuthStack.Navigator>
   );
 }

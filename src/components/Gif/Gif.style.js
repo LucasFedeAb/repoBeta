@@ -18,31 +18,6 @@ export default styles = StyleSheet.create({
     zIndex: 2,
   },
 
-  centeredView: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    //marginTop: 22,
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
-  },
-  modalView: {
-    width: "90%",
-    height: "70%",
-    /* margin: 20, */
-    backgroundColor: "rgba(0, 0, 0, 0.7)",
-    borderRadius: 20,
-    /* padding: 100, */
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    //position: "relative",
-  },
   button: {
     borderRadius: 20,
     padding: 10,
@@ -71,8 +46,8 @@ export default styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.7)", // Fondo oscuro semi-transparente
-    zIndex: 1500, // Asegura que esté en la parte superior
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    zIndex: 1500,
   },
   loaderText: {
     color: "white",

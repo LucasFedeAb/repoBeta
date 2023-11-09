@@ -53,14 +53,19 @@ const SavedScreen = () => {
       getFavoriteGifsFromDb(localId)
         .then((favorites) => {
           console.log("favoritesDB", favorites);
-          const updatedFavoritesList = favorites.map((favorite, index) => ({
-            id: favorite.gifId,
-            title: favorite.title,
-            url: favorite.url,
-            index: index,
-            isSaved: true,
-          }));
-          dispatch(setFavoritesListData(updatedFavoritesList));
+          if (favorites && favorites.length > 0) {
+            const updatedFavoritesList = favorites.map((favorite, index) => ({
+              id: favorite.gifId,
+              title: favorite.title,
+              url: favorite.url,
+              index: index,
+              isSaved: true,
+            }));
+
+            dispatch(setFavoritesListData(updatedFavoritesList));
+          } else {
+            dispatch(setFavoritesListData([]));
+          }
         })
         .catch((error) => {
           console.log("Error al obtener los GIFs favoritos:", error);
@@ -101,16 +106,14 @@ const SavedScreen = () => {
         />
         {isLoading && <Loader />}
         {!isLoading && favoritesListData.length === 0 && (
-          <View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          >
+          <View style={styles.containerEmptyFavorites}>
             <Text
-              style={{
-                color: currentTheme.color,
-                textAlign: "center",
-                fontSize: 16,
-                padding: 4,
-              }}
+              style={[
+                styles.emptyFavorites,
+                {
+                  color: currentTheme.color,
+                },
+              ]}
             >
               ¡Tu galería de GIFs favoritos está lista y esperando 📁✨!
             </Text>

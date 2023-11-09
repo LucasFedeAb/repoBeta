@@ -14,6 +14,5 @@ export default styles = StyleSheet.create({
 
   wrapperStyle: {
     justifyContent: "space-around",
-    /* alignSelf: "stretch", */
   },
 });

@@ -46,7 +46,6 @@ const Header = ({ title, onPress }) => {
   };
 
   return (
-    //<LinearGradient colors={[`#698e71`, `#698e71`, `#000`]} style={styles.nav}>
     <>
       <StatusBar
         animated={true}
@@ -96,14 +95,14 @@ const Header = ({ title, onPress }) => {
                     style={styles.endIcon}
                     onPress={() => navigation.goBack()}
                   >
-                    <Ionicons name="chevron-back" size={35} color="#FFF" />
+                    <Ionicons name="chevron-back" size={30} color="#FFF" />
                   </TouchableOpacity>
                   <Text style={styles.titleDetail}>{title}</Text>
                   <TouchableOpacity
                     style={[styles.endIcon, { marginLeft: 8 }]}
                     onPress={onPress}
                   >
-                    <Ionicons name="ellipsis-vertical" size={25} color="#FFF" />
+                    <Ionicons name="ellipsis-vertical" size={20} color="#FFF" />
                   </TouchableOpacity>
                 </View>
               </>
@@ -113,7 +112,7 @@ const Header = ({ title, onPress }) => {
                   style={styles.endIcon}
                   onPress={() => navigation.goBack()}
                 >
-                  <Ionicons name="chevron-back" size={35} color="#FFF" />
+                  <Ionicons name="chevron-back" size={30} color="#FFF" />
                 </TouchableOpacity>
                 <Text style={styles.titleDetail}>{title}</Text>
                 <View></View>

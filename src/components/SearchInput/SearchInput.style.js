@@ -24,8 +24,6 @@ export default styles = StyleSheet.create({
   },
   searchField: {
     flex: 1,
-    /* paddingVertical: spacing.s,
-    paddingHorizontal: spacing.s, */
     backgroundColor: "#f2f2f2",
     borderRadius: 8,
     color: "#010718",

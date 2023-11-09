@@ -1,6 +1,8 @@
 import AnimatedImageCategory from "./AnimatedImageCategory/AnimatedImageCategory";
 import CustomModal from "./CustomModal/CustomModal";
+import FavoriteButton from "./FavoriteButton/FavoriteButton";
 import Gif from "./Gif/Gif";
+import GifModal from "./GifModal/GifModal";
 import Header from "./Header/Header";
 import ListGifs from "./ListGifs/ListGifs";
 import ListGifsDb from "./ListGifsDb/ListGifsDb";
@@ -13,6 +15,8 @@ export {
   AnimatedImageCategory,
   CustomModal,
   Gif,
+  GifModal,
+  FavoriteButton,
   Header,
   ListGifs,
   ListGifsDb,

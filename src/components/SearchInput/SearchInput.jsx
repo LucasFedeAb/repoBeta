@@ -8,10 +8,6 @@ const SearchInput = ({ onSearch }) => {
   const [value, setValue] = useState("");
   const currentTheme = useSelector((state) => state.theme.currentTheme);
 
-  /* useEffect(() => {
-    onSearch(value);
-  }, [value]); */
-
   const search = () => {
     onSearch(value);
     clearInput();

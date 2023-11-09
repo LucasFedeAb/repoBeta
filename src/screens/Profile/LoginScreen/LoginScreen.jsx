@@ -18,27 +18,6 @@ const LoginScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [triggerLogin] = useLoginMutation();
 
-  /* const onSubmit = () => {
-    triggerLogin({
-      email,
-      password,
-    })
-      .unwrap()
-      .then((result) => {
-        dispatch(setUser(result));
-        insertSession({
-          localId: result.localId,
-          email: result.email,
-          token: result.idToken,
-        })
-          .then((result) => console.log("insertSession", result))
-          .catch((error) => {
-            setErrorLogin(error.message);
-            //console.log("ErrorLog:", error.message);
-          });
-      });
-  }; */
-
   const onSubmit = async () => {
     try {
       const result = await triggerLogin({ email, password }).unwrap();
@@ -128,17 +107,8 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         {error && (
-          <View
-            style={{
-              width: "100%",
-              padding: 8,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "red", fontSize: 12, textAlign: "center" }}>
-              {error}
-            </Text>
+          <View style={styles.containerError}>
+            <Text style={styles.textError}>{error}</Text>
           </View>
         )}
 

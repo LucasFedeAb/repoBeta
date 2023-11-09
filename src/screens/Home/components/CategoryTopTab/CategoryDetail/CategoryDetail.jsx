@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import {
   useGetCategoriesQuery,
   useGetGifsQuery,
-  useGetGifsDbQuery,
 } from "../../../../../services/gifsApi";
 import {
   AnimatedImageCategory,
@@ -16,7 +15,6 @@ import {
 
 const CategoryDetail = ({ category }) => {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
-  //const dataDb = useSelector((state) => state.gifs.dataDb);
   const { data: dataGifs, isLoading, isError } = useGetGifsQuery();
   const { data: dataCategories } = useGetCategoriesQuery();
 
@@ -44,7 +42,7 @@ const CategoryDetail = ({ category }) => {
       {isLoading && <Loader />}
 
       {category === "Tendencias" || category === "Emojis" ? (
-        <ListGifsTrendings data={dataFilterByCategory} category={category}/>
+        <ListGifsTrendings data={dataFilterByCategory} category={category} />
       ) : (
         <>
           <AnimatedImageCategory

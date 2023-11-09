@@ -1,8 +1,7 @@
-import { FlatList, Pressable, View, Text, Modal } from "react-native";
-import React, { useState } from "react";
+import { FlatList } from "react-native";
+import React from "react";
 import styles from "./ListGifs.style";
 import Gif from "../Gif/Gif";
-import { useShareGif } from "../../hooks/useShareGif/useShareGif";
 
 const ListGifs = ({ data }) => {
   const renderGif = ({ item, index }) => {

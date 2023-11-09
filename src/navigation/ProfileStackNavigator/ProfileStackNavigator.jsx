@@ -12,7 +12,13 @@ const ProfileStackNavigator = () => {
         headerShown: false,
       })}
     >
-      <ProfileStack.Screen name="ProfileNav" component={ProfileScreen} />
+      <ProfileStack.Screen
+        name="ProfileNav"
+        component={ProfileScreen}
+        options={{
+          animation: "slide_from_right",
+        }}
+      />
     </ProfileStack.Navigator>
   );
 };

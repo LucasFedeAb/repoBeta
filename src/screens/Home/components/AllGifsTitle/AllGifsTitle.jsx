@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const AllGifsTitle = ({ route }) => {
   const { gifs, title } = route.params || { gifs: [] };
-  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const currentTheme = useSelector((state) => state.theme.currentTheme);
   const [uniqueGifs, setUniqueGifs] = useState([]);
 

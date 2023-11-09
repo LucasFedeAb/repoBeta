@@ -37,9 +37,8 @@ const MainNavigator = () => {
     (async () => {
       try {
         const session = await fetchSession();
-        //console.log("Esta es la sesion", session);
+
         if (session.rows.length) {
-          //console.log(session.rows._array[0]);
           const user = session.rows._array[0];
           dispatch(setUser(user));
         }

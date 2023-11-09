@@ -61,22 +61,6 @@ const SearchScreen = () => {
     "#e9142a",
   ];
 
-  /* const backgroundColors = [
-    "#016450",
-    "#7358ff",
-    "#fff57c",
-    "#34b5d4",
-    "#1e3264",
-    "#e8125c",
-    "#e1118b",
-    "#158a08",
-    "#0bd792",
-    "#509bf6",
-    "#ff8b8a",
-    "#e9142a",
-    "#3c1860",
-  ]; */
-
   return (
     <>
       <StatusBar
@@ -142,22 +126,6 @@ const SearchScreen = () => {
               ]}
             >
               <View style={{ flex: 1 }}>
-                {/* <ScrollView>
-                  <Animated.View
-                    style={[
-                      styles.exploreTextContainer,
-                      {
-                        transform: [{ translateY: exploreTranslateY }],
-                      },
-                    ]}
-                  >
-                    <Text
-                      style={[styles.subTitle, { color: currentTheme.color }]}
-                    >
-                      Explorar
-                    </Text>
-                  </Animated.View>
-                </ScrollView> */}
                 <FlatList
                   data={trendingSearchTerms}
                   numColumns={2}

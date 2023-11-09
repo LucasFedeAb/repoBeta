@@ -48,8 +48,6 @@ export default styles = StyleSheet.create({
     left: 0,
     width: "100%",
     height: 3000,
-    /* padding: spacing.m, */
-    /* backgroundColor: colorGreen.primary, */
     zIndex: 10,
   },
   sidebarContent: {

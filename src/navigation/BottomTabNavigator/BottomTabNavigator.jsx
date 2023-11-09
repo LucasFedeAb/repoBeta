@@ -7,9 +7,7 @@ import styles from "./BottomTabNavigator.style.js";
 import HomeStackNavigator from "../HomeStackNavigator/HomeStackNavigator";
 import SearchStackNavigator from "../SearchStackNavigator/SearchStackNavigator";
 import { useSelector } from "react-redux";
-/* import LoginScreen from "../../screens/Profile/LoginScreen/LoginScreen"; */
-import { ProfileScreen, SavedScreen, SignUpScreen } from "../../screens";
-import AuthStackNavigator from "../AuthStackNavigator/AuthStackNavigator";
+import { SavedScreen } from "../../screens";
 import ProfileStackNavigator from "../ProfileStackNavigator/ProfileStackNavigator";
 
 const BottomTab = createBottomTabNavigator();
@@ -84,11 +82,35 @@ function BottomTabNavigator() {
         },
       })}
     >
-      <BottomTab.Screen name="Home" component={HomeStackNavigator} />
-      <BottomTab.Screen name="Saves" component={SavedScreen} />
+      <BottomTab.Screen
+        name="Home"
+        component={HomeStackNavigator}
+        options={{
+          animation: "fade",
+        }}
+      />
+      <BottomTab.Screen
+        name="Saves"
+        component={SavedScreen}
+        options={{
+          animation: "fade",
+        }}
+      />
       {/* <BottomTab.Screen name="Create" component={SearchStackNavigator} /> */}
-      <BottomTab.Screen name="Search" component={SearchStackNavigator} />
-      <BottomTab.Screen name="Profile" component={ProfileStackNavigator} />
+      <BottomTab.Screen
+        name="Search"
+        component={SearchStackNavigator}
+        options={{
+          animation: "fade",
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileStackNavigator}
+        options={{
+          animation: "fade",
+        }}
+      />
     </BottomTab.Navigator>
   );
 }

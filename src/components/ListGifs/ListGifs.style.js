@@ -19,8 +19,8 @@ export default styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.7)", // Fondo oscuro semi-transparente
-    zIndex: 999, // Asegura que esté en la parte superior
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    zIndex: 999,
   },
   loaderText: {
     color: "white",

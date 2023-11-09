@@ -22,27 +22,7 @@ const SignUpScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [triggerSignup] = useSignUpMutation();
 
-  /* const onSubmit = () => {
-    //console.log("Login button");
-    triggerSignup({
-      email,
-      password,
-    })
-      .unwrap()
-      .then((result) => {
-        //console.log(result);
-        dispatch(setUser(result));
-        insertSession({
-          localId: result.localId,
-          email: result.email,
-          token: result.idToken,
-        });
-      })
-      .catch((err) => console.log("Errr", err));
-  }; */
-
   const onSubmit = async () => {
-    // Validación de la contraseña
     const isValidPassword = validatePassword(password);
     if (!isValidPassword) {
       setPasswordError(
@@ -98,7 +78,6 @@ const SignUpScreen = ({ navigation }) => {
     setHidePassword(!hidePassword);
   };
 
-  // Función para validar la contraseña
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
     return passwordRegex.test(password);
@@ -207,31 +186,13 @@ const SignUpScreen = ({ navigation }) => {
           </View>
         </View>
         {passwordError && (
-          <View
-            style={{
-              width: "100%",
-              padding: 8,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "red", fontSize: 12, textAlign: "center" }}>
-              {passwordError}
-            </Text>
+          <View style={styles.containerError}>
+            <Text style={styles.textError}>{passwordError}</Text>
           </View>
         )}
         {error && (
-          <View
-            style={{
-              width: "100%",
-              padding: 8,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ color: "red", fontSize: 12, textAlign: "center" }}>
-              {error}
-            </Text>
+          <View style={styles.containerError}>
+            <Text style={styles.textError}>{error}</Text>
           </View>
         )}
         <TouchableOpacity>

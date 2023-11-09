@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  Text,
-  Pressable,
-  Modal,
-} from "react-native";
+import { View, Image, TouchableOpacity, Pressable } from "react-native";
 import styles from "./Gif.style";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +13,7 @@ import {
   getFavoriteGifsFromDb,
 } from "../../db";
 import { useShareGif } from "../../hooks/useShareGif/useShareGif";
+import { FavoriteButton, GifModal } from "@components";
 
 const Gif = ({
   id,
@@ -97,9 +91,6 @@ const Gif = ({
               (favorite) => favorite.id === id && favorite.url === url
             )
           );
-          /* setIsFavorite(
-            updatedFavoritesList.includes(favorite.url && favorite.id)
-          ); */
         })
         .catch((error) => {
           console.log("Error al obtener los GIFs favoritos:", error);
@@ -119,88 +110,15 @@ const Gif = ({
   return (
     <>
       {modalVisible && (
-        <Modal
-          animationType="fade"
-          visible={modalVisible}
-          transparent={true}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Image
-                source={{ uri: url }}
-                resizeMode="stretch"
-                style={{
-                  width: "90%",
-                  height: 350,
-                  padding: 4,
-                  marginTop: 45,
-                  borderRadius: 20,
-                }}
-              />
-              <View>
-                <Text style={{ color: "#fff", paddingTop: 24 }}>{title}</Text>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  width: "100%",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-evenly",
-                  gap: 24,
-                }}
-              >
-                <View>
-                  <TouchableOpacity
-                    style={{
-                      flex: 1,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      /* backgroundColor: "#ccc", */
-                      borderRadius: 5,
-                      color: "#fff",
-                    }}
-                    onPress={() => handleShareGif(url)}
-                  >
-                    <View>
-                      <Text style={{ marginHorizontal: 8, color: "#fff" }}>
-                        Compartir Gif
-                      </Text>
-                    </View>
-                    <Ionicons
-                      name="share-social-sharp"
-                      size={30}
-                      color="skyblue"
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View>
-                  <TouchableOpacity
-                    style={{
-                      flexDirection: "row",
-                    }}
-                    onPress={isFavorite ? handleRemoveGif : handleAddGif}
-                  >
-                    <Ionicons
-                      name="heart"
-                      size={30}
-                      color={isFavorite ? "darkorange" : "#fff"}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-              <TouchableOpacity
-                style={styles.favIcon}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Ionicons name="close" size={40} color="#fff" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+        <GifModal
+          url={url}
+          title={title}
+          isFavorite={isFavorite}
+          handleShareGif={handleShareGif}
+          handleAddGif={handleAddGif}
+          handleRemoveGif={handleRemoveGif}
+          handleCloseModal={() => setModalVisible(false)}
+        />
       )}
 
       <View style={[styles.gif]}>
@@ -213,16 +131,13 @@ const Gif = ({
             <Ionicons name="trash" size={25} color="red" />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity
-            style={styles.favIcon}
-            onPress={isFavorite ? handleRemoveGif : handleAddGif}
-          >
-            <Ionicons
-              name="heart"
-              size={25}
-              color={isFavorite ? "darkorange" : "lightgray"}
+          <>
+            <FavoriteButton
+              isFavorite={isFavorite}
+              onPress={isFavorite ? handleRemoveGif : handleAddGif}
+              styleCustom={styles.favIcon}
             />
-          </TouchableOpacity>
+          </>
         )}
       </View>
     </>

@@ -2,7 +2,6 @@ import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { CategoryTopTab } from "../../../screens/Home/components";
 import styles from "./HomeTopTabNavigator.style";
-/* import dataCategories from "../../../data/dataCategories"; */
 import { useSelector } from "react-redux";
 import { colorGreen } from "../../../constants/colors";
 import { Home } from "../../../screens";
@@ -34,7 +33,6 @@ const HomeTopTabNavigator = () => {
             styles.tabBarContentContainer,
             {
               backgroundColor: "#000",
-              //backgroundColor: '#202124',
             },
           ],
           tabBarIndicatorStyle: {

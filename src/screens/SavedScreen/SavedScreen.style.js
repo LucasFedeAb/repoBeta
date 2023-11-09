@@ -4,8 +4,16 @@ export default styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    /* justifyContent: "center",
-    alignItems: "center", */
+  },
+  containerEmptyFavorites: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyFavorites: {
+    textAlign: "center",
+    fontSize: 16,
+    padding: 4,
   },
   modalContent: {
     justifyContent: "center",
@@ -29,7 +37,7 @@ export default styles = StyleSheet.create({
     borderRadius: 5,
   },
   labelButtonModal: {
-    color:"#fff",
+    color: "#fff",
     fontSize: 12,
     textAlign: "center",
   },

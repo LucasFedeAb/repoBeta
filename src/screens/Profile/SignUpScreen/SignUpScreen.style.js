@@ -21,7 +21,17 @@ export default styles = StyleSheet.create({
     borderBottomStartRadius: 0,
     borderTopStartRadius: 300,
   },
-
+  containerError: {
+    width: "100%",
+    padding: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textError: {
+    color: "red",
+    fontSize: 12,
+    textAlign: "center",
+  },
   logo: {
     color: "#fff",
     fontSize: 24,

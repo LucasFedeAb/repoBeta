@@ -11,13 +11,11 @@ export default styles = StyleSheet.create({
     left: 0,
     zIndex: 1,
     borderRadius: 16,
-    /* paddingTop: 4, */
   },
 
   imageCategory: {
     width: "100%",
     height: 220,
-    /* borderRadius: 10, */
     opacity: 0.9,
     borderBottomRightRadius: 4,
     borderBottomLeftRadius: 4,
