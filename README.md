@@ -22,17 +22,29 @@ GifStickers es una aplicación construida en React Native Expo que te permite ex
 
 ## Vistas Previas
 
-### Pantalla de Búsqueda
 
 ### Pantalla Principal
 
-![Pantalla Principal](/screenshots/home_screen.gif)
+![Vista Inicial](https://github.com/LucasFedeAb/repoBeta/assets/110626720/af4184e9-e115-481f-ba09-275339def7f1)
 
 ![Pantalla de Búsqueda](/screenshots/search_screen.gif)
 
 ### Pantalla de Favoritos
 
-![Pantalla de Favoritos](/screenshots/favorites_screen.gif)
+![Pantalla de Favoritos](https://github.com/LucasFedeAb/repoBeta/assets/110626720/127b21f9-9c01-4165-94b7-89adced4d44e)
+
+### Pantalla de Busqueda
+
+![Pantalla de Búsqueda](https://github.com/LucasFedeAb/repoBeta/assets/110626720/029af4e0-fae8-47fc-849b-7eecad198814)
+
+### Pantalla de Perfil y Login
+
+![Pantalla de Perfil](https://github.com/LucasFedeAb/repoBeta/assets/110626720/370d545a-5a6d-4677-bd59-5c3226256253)
+
+### Ligth/dark mode
+
+![Pantalla de Búsqueda](https://github.com/LucasFedeAb/repoBeta/assets/110626720/cb50f1c6-309b-4a0c-b89c-9bab9d5668e4)
+
 
 ## Contribuir
 
