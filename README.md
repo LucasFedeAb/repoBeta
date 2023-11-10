@@ -1,4 +1,4 @@
-# GifStickers App
+# GifStickers App 😀🎬
 
 GifStickers es una aplicación construida en React Native Expo que te permite explorar, guardar y compartir divertidos gifs de manera fácil y rápida.
 
